@@ -279,10 +279,19 @@ Read and complete `model_card.md`:
 
 [**Model Card**](model_card.md)
 
-Write 1 to 2 paragraphs here about what you learned:
+<!-- DRAFT written with my AI assistant: rewrite in your own words before submitting, then delete this comment. -->
 
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
+**How recommenders turn data into predictions:** A recommender doesn't "understand" music. It
+turns each song into a few numbers and labels, turns my taste into targets, and adds up points
+for how well they match. Then it sorts. What surprised me is how much that simple loop can feel
+like a real recommendation: the Chill Lofi list looked like a playlist I'd actually make. The
+weights are where the "opinions" live. Changing genre from 2.0 to 1.0 and doubling energy
+reshuffled several top-5 lists without any other code change.
 
-
-
+**Where bias and unfairness show up:** Bias came from both the data and the rules. The data
+has only one song for most genres, and one person chose every label, so a metal fan always gets
+the same single metal song. The rules reward exact label matches, so a song labeled "indie pop"
+gets nothing from a "pop" fan, and a K-Pop fan gets no matches at all, while the output still
+looks just as confident. Real apps have the same risks at a much bigger scale: whoever writes
+the labels and picks the weights decides whose taste counts. More details are in the
+[Model Card](model_card.md), sections 6 and 9.
