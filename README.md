@@ -2,16 +2,13 @@
 
 ## Project Summary
 
-In this project you will build and explain a small music recommender system.
-
-Your goal is to:
-
-- Represent songs and a user "taste profile" as data
-- Design a scoring rule that turns that data into recommendations
-- Evaluate what your system gets right and wrong
-- Reflect on how this mirrors real world AI recommenders
-
-Replace this paragraph with your own summary of what your version does.
+**VibeCheck 1.0** is a small, content-based music recommender that runs in the terminal. It
+loads a 20-song catalog from `data/songs.csv`, scores every song against a user's taste profile
+(favorite genre and mood, target energy and valence, acoustic preference), and prints the top 5
+songs. Each song comes with a score out of 6 and a list of reasons showing where every point
+came from. The CLI runs seven profiles, three typical and four adversarial, to show both where
+the scoring works and where it can be tricked. The [Model Card](model_card.md) documents how it
+works, how it was evaluated, and its biases.
 
 ---
 
@@ -160,9 +157,10 @@ Example: *Midnight Coding* (lofi, chill, energy 0.42) for the study profile scor
 1. Create a virtual environment (optional but recommended):
 
    ```bash
-   python -m venv .venv
+   python3 -m venv .venv
    source .venv/bin/activate      # Mac or Linux
    .venv\Scripts\activate         # Windows
+   ```
 
 2. Install dependencies
 
@@ -178,13 +176,13 @@ python -m src.main
 
 ### Running Tests
 
-Run the starter tests with:
+Run the tests from the project root with:
 
 ```bash
 pytest
 ```
 
-You can add more tests in `tests/test_recommender.py`.
+`pytest.ini` adds the project root to the import path so the tests can import `src`.
 
 ---
 
@@ -251,25 +249,35 @@ by energy, valence, and acousticness.
 
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
+- **Weight shift (energy ×2, genre ×½):** I temporarily changed energy from 1.5 to 3.0 and genre
+  from 2.0 to 1.0. *Rooftop Lights* (happy indie pop) moved above *Gym Hero* for the pop fan, and
+  a loud metal song replaced a quiet folk song at #1 for the "Sad Banger" profile. Both changes
+  were more accurate. Chill Lofi didn't change at all. The downside was that scores bunched
+  together and genre almost stopped mattering, so I kept the original weights.
+- **Adding valence:** energy alone couldn't tell an angry metal song from a euphoric EDM song
+  (both are about 0.95 energy). Adding valence as a 0–1 "closer is better" feature separated
+  them.
+- **Different user types:** opposite profiles (Chill Lofi vs. Deep Intense Rock) share no songs.
+  Adversarial profiles exposed problems. Matching labels beat a big energy mismatch, a genre not
+  in the catalog gave low, nearly tied scores with no warning, and *Gym Hero* and
+  *Concrete Crown* showed up in 4 of 7 lists.
 
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+Full outputs and comparisons: [model_card.md, section 7](model_card.md#7-evaluation).
 
 ---
 
 ## Limitations and Risks
 
-Summarize some limitations of your recommender.
+- **Tiny, hand-labeled catalog:** 20 made-up songs, most genres with only one song, and every
+  label chosen by one person.
+- **Labels can outvote sound:** exact genre and mood matches are worth 3 points, enough to rank
+  a quiet song first for someone asking for loud music.
+- **Exact text matching:** "indie pop" gets no credit from a "pop" fan, and unknown genres
+  (k-pop) fail silently.
+- **No understanding of lyrics, language, vocals, or era**, and no learning from skips or replays.
+- **Filter bubbles:** a fan of a one-song genre gets the same #1 every time.
 
-Examples:
-
-- It only works on a tiny catalog
-- It does not understand lyrics or language
-- It might over favor one genre or mood
-
-You will go deeper on this in your model card.
+More detail in [model_card.md, section 6](model_card.md#6-limitations-and-bias).
 
 ---
 
