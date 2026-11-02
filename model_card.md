@@ -575,31 +575,32 @@ close to "pop").
 
 ## 9. Personal Reflection  
 
-<!-- DRAFT written with my AI assistant from what happened in this project: rewrite in your own words before submitting, then delete this comment. -->
-
-**Biggest learning moment:** the "Sad Banger" test. I built a profile that asked for loud, dark
-music but labeled it "folk / sad." The system picked a quiet acoustic folk song first, by a lot.
-Nothing was broken, and the math did exactly what I told it to. I just hadn't realized that two
+**Biggest learning moment:** the "Sad Banger" test. One of the adversarial profiles asked for
+loud, dark music but labeled it "folk / sad." The system picked a quiet acoustic folk song first, by a lot.
+Nothing was broken, and the math did exactly what the recipe said. I just hadn't realized that two
 label matches (3 points) could outweigh a huge energy mismatch. That showed me that a
 recommender's "opinions" are really just its weights, and small choices like "+2 for genre"
 decide who it serves well.
 
-**How AI tools helped, and when I double-checked:** AI helped me research collaborative
-vs. content-based filtering, expand the dataset, write the scoring code, and come up with
-adversarial profiles I wouldn't have thought of. But I had to verify things:
-- I recalculated a few scores by hand (for example, *Midnight Coding* = 5.79) to make sure the
-  code matched the recipe.
-- The starter code didn't run as given (`main.py`'s import and the tests couldn't find `src`),
-  and those fixes needed checking.
-- When we moved the project to a new folder, the git history didn't come along and had to be
+**How AI tools helped, and when things needed double-checking:** I used an AI coding agent
+(Claude Code) for most of this project. I gave it each phase's instructions one at a time, and
+it did the research summary, expanded the dataset, wrote the scoring code, suggested adversarial
+profiles, and drafted the documentation. Working phase by phase, and having it commit after each
+phase, let me keep track of what changed. Several things still needed verifying instead of
+being trusted:
+- Scores were checked against hand calculations (for example, *Midnight Coding* = 5.79) to make
+  sure the code matched the recipe.
+- The starter code didn't run as given (`main.py`'s import broke `python -m src.main`, and the
+  tests couldn't find `src`), so those fixes had to be tested.
+- When the project moved to a new folder, the git history didn't come along and had to be
   restored from GitHub.
-- For the weight experiment, I confirmed the new maximum score (6.5) and that the tests still
-  passed before trusting the results.
+- For the weight experiment, the new maximum score (6.5) and the passing tests were confirmed
+  before trusting the results.
 
 AI was fast, but "it ran" didn't mean "it was right."
 
 **What surprised me:** how much a few lines of addition and sorting can *feel* like a real
-recommendation. The Chill Lofi list honestly looked like a playlist I'd make, and the reasons
+recommendation. The Chill Lofi list looked like a real study playlist, and the reasons
 next to each song made it feel thoughtful. But the same simple rules also produced results that
 felt clearly wrong (a calm folk song for a "banger" request). That made me realize real apps
 probably feel "smart" partly because they explain themselves and get the obvious cases right.

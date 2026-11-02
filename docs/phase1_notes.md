@@ -1,5 +1,9 @@
 # Phase 1 Notes: Understanding the Problem
 
+> These are my Phase 1 notes, written before the dataset was expanded and before the recipe was
+> finalized. The final recipe (adds valence, max 6.0 points) is in the README under
+> "Algorithm Recipe (final)".
+
 ## Step 1: How real platforms recommend
 
 **Prompt used:**

@@ -193,6 +193,8 @@ now runs seven profiles; all of their outputs are in [model_card.md](model_card.
 
 ```
 Loaded songs: 20
+
+### High-Energy Pop
 ================================================================
 User profile: favorite_genre=pop, favorite_mood=happy, target_energy=0.8, target_valence=0.8, likes_acoustic=False
 ================================================================
@@ -243,8 +245,6 @@ almost perfect energy, but it ranks 3rd because `indie pop` doesn't exactly matc
 the exact-match bias noted above. Positions 4–5 have no label matches, so they are decided only
 by energy, valence, and acousticness.
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
-
 ---
 
 ## Experiments You Tried
@@ -287,12 +287,10 @@ Read and complete `model_card.md`:
 
 [**Model Card**](model_card.md)
 
-<!-- DRAFT written with my AI assistant: rewrite in your own words before submitting, then delete this comment. -->
-
 **How recommenders turn data into predictions:** A recommender doesn't "understand" music. It
 turns each song into a few numbers and labels, turns my taste into targets, and adds up points
 for how well they match. Then it sorts. What surprised me is how much that simple loop can feel
-like a real recommendation: the Chill Lofi list looked like a playlist I'd actually make. The
+like a real recommendation: the Chill Lofi list looked like a real study playlist. The
 weights are where the "opinions" live. Changing genre from 2.0 to 1.0 and doubling energy
 reshuffled several top-5 lists without any other code change.
 
