@@ -190,7 +190,8 @@ You can add more tests in `tests/test_recommender.py`.
 
 ## Sample Recommendation Output
 
-Output of `python -m src.main` with the default "pop/happy" profile:
+Output of `python -m src.main` for the first profile, "High-Energy Pop" (pop/happy). The CLI
+now runs seven profiles; all of their outputs are in [model_card.md](model_card.md#7-evaluation).
 
 ```
 Loaded songs: 20
