@@ -55,7 +55,8 @@ expanded set the correlation is −0.76, so acousticness now adds real informati
 
 ### The user profile
 
-The default taste profile is a "late-night study" listener:
+My design example is a "late-night study" listener. (The CLI in `src/main.py` runs the
+starter "pop/happy" profile by default; see Sample Recommendation Output below.)
 
 ```python
 user_prefs = {
@@ -189,16 +190,59 @@ You can add more tests in `tests/test_recommender.py`.
 
 ## Sample Recommendation Output
 
-Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
+Output of `python -m src.main` with the default "pop/happy" profile:
 
 ```
-# e.g.:
-# User profile: genre=indie, mood=chill, energy=low
-# Recommendations:
-#   1. ...
-#   2. ...
-#   3. ...
+Loaded songs: 20
+================================================================
+User profile: favorite_genre=pop, favorite_mood=happy, target_energy=0.8, target_valence=0.8, likes_acoustic=False
+================================================================
+
+1. Sunrise City by Neon Echo  [pop / happy]
+   Score: 5.84 / 6.00
+   Because:
+     - genre match: pop (+2.0)
+     - mood match: happy (+1.0)
+     - energy 0.82 vs your 0.80 (+1.47)
+     - valence 0.84 vs your 0.80 (+0.96)
+     - non-acoustic fit, acousticness 0.18 (+0.41)
+
+2. Gym Hero by Max Pulse  [pop / intense]
+   Score: 4.75 / 6.00
+   Because:
+     - genre match: pop (+2.0)
+     - energy 0.93 vs your 0.80 (+1.30)
+     - valence 0.77 vs your 0.80 (+0.97)
+     - non-acoustic fit, acousticness 0.05 (+0.47)
+
+3. Rooftop Lights by Indigo Parade  [indie pop / happy]
+   Score: 3.75 / 6.00
+   Because:
+     - mood match: happy (+1.0)
+     - energy 0.76 vs your 0.80 (+1.44)
+     - valence 0.81 vs your 0.80 (+0.99)
+     - non-acoustic fit, acousticness 0.35 (+0.33)
+
+4. Laser Tide by Pulsewave  [edm / euphoric]
+   Score: 2.77 / 6.00
+   Because:
+     - energy 0.95 vs your 0.80 (+1.28)
+     - valence 0.80 vs your 0.80 (+1.00)
+     - non-acoustic fit, acousticness 0.02 (+0.49)
+
+5. Concrete Crown by Kilo Verse  [hip hop / confident]
+   Score: 2.75 / 6.00
+   Because:
+     - energy 0.78 vs your 0.80 (+1.47)
+     - valence 0.62 vs your 0.80 (+0.82)
+     - non-acoustic fit, acousticness 0.08 (+0.46)
 ```
+
+These results match what I expected. *Sunrise City* matches on everything. *Gym Hero* comes 2nd
+on the genre bonus even though its mood is "intense." *Rooftop Lights* is a happy song with
+almost perfect energy, but it ranks 3rd because `indie pop` doesn't exactly match `pop`. That's
+the exact-match bias noted above. Positions 4–5 have no label matches, so they are decided only
+by energy, valence, and acousticness.
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
 

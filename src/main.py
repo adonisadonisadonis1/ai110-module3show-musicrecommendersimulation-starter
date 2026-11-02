@@ -1,33 +1,48 @@
 """
 Command line runner for the Music Recommender Simulation.
 
-This file helps you quickly run and test your recommender.
+Loads data/songs.csv, scores every song against a user profile, and prints
+the top recommendations with the reasons behind each score.
 
-You will implement the functions in recommender.py:
-- load_songs
-- score_song
-- recommend_songs
+Run from the project root with: python -m src.main
 """
 
-from recommender import load_songs, recommend_songs
+from src.recommender import load_songs, recommend_songs
+
+
+MAX_SCORE = 6.0  # genre 2.0 + mood 1.0 + energy 1.5 + valence 1.0 + acoustic 0.5
+
+
+def print_recommendations(user_prefs: dict, recommendations: list) -> None:
+    """Print the user profile and a numbered, explained list of recommendations."""
+    profile = ", ".join(f"{key}={value}" for key, value in user_prefs.items())
+    print("=" * 64)
+    print(f"User profile: {profile}")
+    print("=" * 64)
+    for rank, (song, score, explanation) in enumerate(recommendations, start=1):
+        print(f"\n{rank}. {song['title']} by {song['artist']}  [{song['genre']} / {song['mood']}]")
+        print(f"   Score: {score:.2f} / {MAX_SCORE:.2f}")
+        print("   Because:")
+        for reason in explanation.split("; "):
+            print(f"     - {reason}")
+    print()
 
 
 def main() -> None:
-    songs = load_songs("data/songs.csv") 
+    songs = load_songs("data/songs.csv")
+    print(f"Loaded songs: {len(songs)}")
 
-    # Starter example profile
-    user_prefs = {"genre": "pop", "mood": "happy", "energy": 0.8}
+    # Default "pop/happy" profile
+    user_prefs = {
+        "favorite_genre": "pop",
+        "favorite_mood": "happy",
+        "target_energy": 0.80,
+        "target_valence": 0.80,
+        "likes_acoustic": False,
+    }
 
     recommendations = recommend_songs(user_prefs, songs, k=5)
-
-    print("\nTop recommendations:\n")
-    for rec in recommendations:
-        # You decide the structure of each returned item.
-        # A common pattern is: (song, score, explanation)
-        song, score, explanation = rec
-        print(f"{song['title']} - Score: {score:.2f}")
-        print(f"Because: {explanation}")
-        print()
+    print_recommendations(user_prefs, recommendations)
 
 
 if __name__ == "__main__":

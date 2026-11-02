@@ -32,6 +32,35 @@ Prompts:
 
 Avoid code here. Pretend you are explaining the idea to a friend who does not program.
 
+**How it works, in plain language:**
+
+Think of the recommender as a judge holding a scorecard. You tell it five things about your
+taste: your favorite genre, your favorite mood, how energetic you want the music to be (0 = very
+calm, 1 = very intense), how happy or bright you want it to sound (also 0 to 1), and whether you
+like acoustic-sounding music.
+
+The judge then goes through every song in the catalog, one at a time, and awards points:
+
+- **Same genre as your favorite?** 2 points. This is the biggest single reward, because genre is
+  usually the most stable part of someone's taste.
+- **Same mood as your favorite?** 1 point.
+- **Energy close to what you asked for?** Up to 1.5 points. A song right on your target gets
+  almost all of them, and a song far away gets few. It rewards being *close*, not being louder
+  or quieter, so a calm listener isn't buried in workout tracks.
+- **Brightness (happy vs. sad) close to what you asked for?** Up to 1 point, using the same
+  "closer is better" idea.
+- **Acoustic or not, the way you like it?** Up to half a point, as a small tiebreaker.
+
+The best possible score is 6 points. After every song has a score, the judge lines them up from
+highest to lowest and shows you the top five. If two songs tie, the one whose energy is closer to
+your target goes first. Each recommendation comes with its scorecard, for example "genre match
+(+2.0), energy 0.82 vs your 0.80 (+1.47)", so you can see exactly why it was picked.
+
+**Changes from the starter logic:** the starter returned the first few songs in the file with a
+placeholder explanation. Now every song is actually scored and ranked. I also added valence
+(happy vs. sad) to the profile, because energy alone can't tell an angry metal song from a
+euphoric dance track.
+
 ---
 
 ## 4. Data  
